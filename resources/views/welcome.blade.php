@@ -63,6 +63,30 @@
                 margin-bottom: 30px;
             }
         </style>
+        <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script>
+            // Enable pusher logging - don't include this in production
+            Pusher.logToConsole = true;
+            const Vue = window.vue;
+
+            var pusher = new Pusher('c7489d30d1a0407ee234', {
+                cluster: 'eu'
+            });
+
+            var channel = pusher.subscribe('chat');
+            channel.bind('my-event', function(data) {
+                app.messages.push(JSON.stringify(data));
+            });
+
+            // Vue application
+            const app = new Vue({
+                el: '#app',
+                data: {
+                    messages: [],
+                },
+            });
+        </script>
     </head>
     <body>
         <div class="flex-center position-ref full-height">

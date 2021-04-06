@@ -7,16 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 class Message extends Model
 {
     //
-    protected $fillable = ['body'];
-    protected $appends = ['selfMessage'];
+    /**
+     * Fields that are mass assignable
+     *
+     * @var array
+     */
+    protected $fillable = ['message'];
 
+    /**
+     * A message belong to a user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function getSelfMessageAttribute()
-    {
-        return $this->user_id === auth()->user()->id;
     }
 }
